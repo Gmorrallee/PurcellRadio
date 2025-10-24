@@ -1,0 +1,228 @@
+# NSG for Identity Directory Services UKS Subnet
+
+resource "azurerm_network_security_group" "NSG-Idy-DirServices-UKS" {
+  name                = "NSG-Idy-DirServices-UKS"
+  location            = var.location_production
+  resource_group_name = data.azurerm_resource_group.rg-identity-networking.name
+  provider            = azurerm.sub-identity
+}
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Idy-DirServices-UKS" {
+  network_security_group_id = azurerm_network_security_group.NSG-Idy-DirServices-UKS.id
+  subnet_id                 = azurerm_subnet.Sn-Idy-DirServices-UKS.id
+  provider                  = azurerm.sub-identity
+}
+
+resource "azurerm_network_security_rule" "NSG-Idy-DirServices-UKS-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes       = ["10.202.251.0/24", "10.203.251.0/24"]
+  destination_address_prefix  = "10.200.10.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-identity-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-Idy-DirServices-UKS.name
+    provider                    = azurerm.sub-identity
+}
+
+resource "azurerm_network_security_rule" "NSG-Idy-DirServices-UKS_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-identity-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Idy-DirServices-UKS.name
+        provider                    = azurerm.sub-identity
+  
+}
+
+# NSG for Identity Directory Services UKW Subnet
+
+resource "azurerm_network_security_group" "NSG-Idy-DirServices-UKW" {
+  name                = "NSG-Idy-DirServices-UKW"
+  location            = var.location_dr
+  resource_group_name = data.azurerm_resource_group.rg-identity-networking.name
+  provider            = azurerm.sub-identity
+}
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Idy-DirServices-UKW" {
+  network_security_group_id = azurerm_network_security_group.NSG-Idy-DirServices-UKW.id
+  subnet_id                 = azurerm_subnet.Sn-Idy-DirServices-UKW.id
+  provider                  = azurerm.sub-identity
+}
+
+resource "azurerm_network_security_rule" "NSG-Idy-DirServices-UKW-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+  destination_address_prefix  = "10.201.10.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-identity-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-Idy-DirServices-UKW.name
+    provider                    = azurerm.sub-identity
+}
+
+resource "azurerm_network_security_rule" "NSG-Idy-DirServices-UKW_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-identity-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Idy-DirServices-UKW.name
+        provider                    = azurerm.sub-identity
+  
+}
+
+# NSG for Identity Management UKS Subnet
+
+resource "azurerm_network_security_group" "NSG-Idy-Management-UKS" {
+    name                = "NSG-Idy-Management-UKS"
+    location            = var.location_production
+    resource_group_name = data.azurerm_resource_group.rg-identity-networking.name
+    provider            = azurerm.sub-identity
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Idy-Management-UKS" {
+    network_security_group_id = azurerm_network_security_group.NSG-Idy-Management-UKS.id
+    subnet_id                 = azurerm_subnet.Sn-Idy-Management-UKS.id
+    provider                  = azurerm.sub-identity
+}
+
+resource "azurerm_network_security_rule" "NSG-Idy-Management-UKS-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes       = ["10.202.251.0/24", "10.203.251.0/24"]
+  destination_address_prefix  = "10.200.50.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-identity-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-Idy-Management-UKS.name
+    provider                    = azurerm.sub-identity
+}
+
+resource "azurerm_network_security_rule" "NSG-Idy-Management-UKS_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-identity-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Idy-Management-UKS.name
+        provider                    = azurerm.sub-identity
+  
+}
+
+# NSG for Identity Management UKW Subnet
+
+resource "azurerm_network_security_group" "NSG-Idy-Management-UKW" {
+    name                = "NSG-Idy-Management-UKW"
+    location            = var.location_dr
+    resource_group_name = data.azurerm_resource_group.rg-identity-networking.name
+    provider            = azurerm.sub-identity
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Idy-Management-UKW" {
+    network_security_group_id = azurerm_network_security_group.NSG-Idy-Management-UKW.id
+    subnet_id                 = azurerm_subnet.Sn-Idy-Management-UKW.id
+    provider                  = azurerm.sub-identity
+}
+
+resource "azurerm_network_security_rule" "NSG-Idy-Management-UKW-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes       = ["10.202.251.0/24", "10.203.251.0/24"]
+  destination_address_prefix  = "10.201.50.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-identity-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-Idy-Management-UKW.name
+    provider                    = azurerm.sub-identity
+}
+
+resource "azurerm_network_security_rule" "NSG-Idy-Management-UKW_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-identity-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Idy-Management-UKW.name
+        provider                    = azurerm.sub-identity
+  
+}
+
+# NSG for Connectivity Management UKS Subnet
+
+resource "azurerm_network_security_group" "NSG-Conn-Management-UKS" {
+    name                = "NSG-Conn-Management-UKS"
+    location            = var.location_production
+    resource_group_name = data.azurerm_resource_group.rg-connectivity-networking.name
+    provider            = azurerm.sub-connectivity
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Conn-Management-UKS" {
+    network_security_group_id = azurerm_network_security_group.NSG-Conn-Management-UKS.id
+    subnet_id                 = azurerm_subnet.Sn-Conn-Management-UKS.id
+    provider                  = azurerm.sub-connectivity
+}
+
+resource "azurerm_network_security_rule" "NSG-Conn-Management-UKS-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+  destination_address_prefix  = "10.202.50.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-connectivity-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-Conn-Management-UKS.name
+    provider                    = azurerm.sub-connectivity
+}
+
+resource "azurerm_network_security_rule" "NSG-Conn-Management-UKS_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-connectivity-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Conn-Management-UKS.name
+        provider                    = azurerm.sub-connectivity
+  
+}
+
