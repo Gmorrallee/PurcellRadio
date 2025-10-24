@@ -226,3 +226,49 @@ resource "azurerm_network_security_rule" "NSG-Conn-Management-UKS_Deny-All-Any" 
   
 }
 
+# NSG for Connectivity Management UKW Subnet
+
+resource "azurerm_network_security_group" "NSG-Conn-Management-UKW" {
+    name                = "NSG-Conn-Management-UKW"
+    location            = var.location_dr
+    resource_group_name = data.azurerm_resource_group.rg-connectivity-networking.name
+    provider            = azurerm.sub-connectivity
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Conn-Management-UKW" {
+    network_security_group_id = azurerm_network_security_group.NSG-Conn-Management-UKW.id
+    subnet_id                 = azurerm_subnet.Sn-Conn-Management-UKW.id
+    provider                  = azurerm.sub-connectivity
+}
+
+resource "azurerm_network_security_rule" "NSG-Conn-Management-UKW-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+  destination_address_prefix  = "10.203.50.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-connectivity-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-Conn-Management-UKW.name
+    provider                    = azurerm.sub-connectivity
+}
+
+resource "azurerm_network_security_rule" "NSG-Conn-Management-UKW_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-connectivity-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Conn-Management-UKW.name
+        provider                    = azurerm.sub-connectivity
+  
+}
+
