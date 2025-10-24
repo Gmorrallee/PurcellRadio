@@ -58,3 +58,15 @@ variable "location_dr" {
   type        = string
   default     = "ukwest"
 }
+
+variable "firewall_private_ip_uks" {
+  description = "Private IP address of the Azure Firewall in UKS"
+  type        = string
+  default     = "10.202.252.4"
+}
+
+variable "firewall_private_ip_ukw" {
+  description = "Private IP address of the Azure Firewall in UKW"
+  type        = string
+  default     = "10.203.252.4"
+}
