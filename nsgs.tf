@@ -364,6 +364,99 @@ resource "azurerm_network_security_rule" "NSG-Prod-Management-UKW_Deny-All-Any" 
   
 }
 
+#NSG for Production Cornwall UKS Subnet
+
+resource "azurerm_network_security_group" "NSG-Prod-Cornwall-UKS" {
+    name                = "NSG-Prod-Cornwall-UKS"
+    location            = var.location_production
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-Cornwall-UKS" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-Cornwall-UKS.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-Cornwall-UKS.id
+    provider                  = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Cornwall-UKS-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+  destination_address_prefix  = "10.204.100.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-Prod-Management-UKS.name
+    provider                    = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Cornwall-UKS_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Cornwall-UKS.name
+        provider                    = azurerm.sub-production
+  
+}
+
+#NSG for Production Cornwall UKW Subnet
+
+resource "azurerm_network_security_group" "NSG-Prod-Cornwall-UKW" {
+    name                = "NSG-Prod-Cornwall-UKW"
+    location            = var.location_dr
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-Cornwall-UKW" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-Cornwall-UKW.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-Cornwall-UKW.id
+    provider                  = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Cornwall-UKW-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+  destination_address_prefix  = "10.204.100.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-Prod-Cornwall-UKW.name
+    provider                    = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Cornwall-UKW_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Cornwall-UKW.name
+        provider                    = azurerm.sub-production
+  
+}
+
+
 # NSG for DevTest management subnet UKS Subnet
 
 resource "azurerm_network_security_group" "NSG-DevTest-Management-UKS" {
@@ -455,3 +548,96 @@ resource "azurerm_network_security_rule" "NSG-DevTest-Management-UKW_Deny-All-An
         provider                    = azurerm.sub-devtest
   
 }
+
+# NSG for DevTest Cornwall UKS Subnet
+
+resource "azurerm_network_security_group" "NSG-DevTest-Cornwall-UKS" {
+    name                = "NSG-DevTest-Cornwall-UKS"
+    location            = var.location_devtest
+    resource_group_name = data.azurerm_resource_group.rg-devtest-networking.name
+    provider            = azurerm.sub-devtest
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-DevTest-Cornwall-UKS" {
+    network_security_group_id = azurerm_network_security_group.NSG-DevTest-Cornwall-UKS.id
+    subnet_id                 = azurerm_subnet.Sn-DevTest-Cornwall-UKS.id
+    provider                  = azurerm.sub-devtest
+}
+
+resource "azurerm_network_security_rule" "NSG-DevTest-Cornwall-UKS-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+  destination_address_prefix  = "10.206.100.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-devtest-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-DevTest-Cornwall-UKS.name
+    provider                    = azurerm.sub-devtest
+}
+
+resource "azurerm_network_security_rule" "NSG-DevTest-Cornwall-UKS_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-devtest-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-DevTest-Cornwall-UKS.name
+        provider                    = azurerm.sub-devtest
+  
+}
+
+# NSG for DevTest Cornwall UKW Subnet
+
+resource "azurerm_network_security_group" "NSG-DevTest-Cornwall-UKW" {
+    name                = "NSG-DevTest-Cornwall-UKW"
+    location            = var.location_dr
+    resource_group_name = data.azurerm_resource_group.rg-devtest-networking.name
+    provider            = azurerm.sub-devtest
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-DevTest-Cornwall-UKW" {
+    network_security_group_id = azurerm_network_security_group.NSG-DevTest-Cornwall-UKW.id
+    subnet_id                 = azurerm_subnet.Sn-DevTest-Cornwall-UKW.id
+    provider                  = azurerm.sub-devtest
+}
+
+resource "azurerm_network_security_rule" "NSG-DevTest-Cornwall-UKW-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+  destination_address_prefix  = "10.207.100.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-devtest-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-DevTest-Cornwall-UKW.name
+    provider                    = azurerm.sub-devtest
+}
+resource "azurerm_network_security_rule" "NSG-DevTest-Cornwall-UKW_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-devtest-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-DevTest-Cornwall-UKW.name
+        provider                    = azurerm.sub-devtest
+  
+}
+
+

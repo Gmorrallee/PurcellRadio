@@ -295,3 +295,19 @@ resource "azurerm_subnet" "Sn-DevTest-Management-UKW" {
     address_prefixes     = ["10.207.50.0/23"]
     provider             = azurerm.sub-devtest
 }
+
+resource "azurerm_subnet" "Sn-DevTest-Cornwall-UKS" {
+    name                 = "Sn-DevTest-Cornwall-UKS "
+    resource_group_name  = data.azurerm_resource_group.rg-devtest-networking.name
+    virtual_network_name = data.azurerm_virtual_network.AZ01-devtest-uks.name
+    address_prefixes     = ["10.206.100.0/23"]
+    provider             = azurerm.sub-devtest
+}
+
+resource "azurerm_subnet" "Sn-DevTest-Cornwall-UKW" {
+    name                 = "Sn-DevTest-Cornwall-UKW"
+    resource_group_name  = data.azurerm_resource_group.rg-devtest-networking.name
+    virtual_network_name = data.azurerm_virtual_network.AZ01-devtest-ukw.name
+    address_prefixes     = ["10.207.100.0/23"]
+    provider             = azurerm.sub-devtest
+}
