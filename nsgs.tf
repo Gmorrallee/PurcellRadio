@@ -272,3 +272,186 @@ resource "azurerm_network_security_rule" "NSG-Conn-Management-UKW_Deny-All-Any" 
   
 }
 
+# NSG for Production manaagement subnet UKS Subnet  
+
+resource "azurerm_network_security_group" "NSG-Prod-Management-UKS" {
+    name                = "NSG-Prod-Management-UKS"
+    location            = var.location_production
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-Management-UKS" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-Management-UKS.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-Management-UKS.id
+    provider                  = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Management-UKS-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+  destination_address_prefix  = "10.204.50.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-Prod-Management-UKS.name
+    provider                    = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Management-UKS_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Management-UKS.name
+        provider                    = azurerm.sub-production
+  
+}
+
+# NSG for Production manaagement subnet UKW Subnet
+
+resource "azurerm_network_security_group" "NSG-Prod-Management-UKW" {
+    name                = "NSG-Prod-Management-UKW"
+    location            = var.location_dr
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-Management-UKW" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-Management-UKW.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-Management-UKW.id
+    provider                  = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Management-UKW-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+  destination_address_prefix  = "10.205.50.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-Prod-Management-UKW.name
+    provider                    = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Management-UKW_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Management-UKW.name
+        provider                    = azurerm.sub-production
+  
+}
+
+# NSG for DevTest management subnet UKS Subnet
+
+resource "azurerm_network_security_group" "NSG-DevTest-Management-UKS" {
+    name                = "NSG-DevTest-Management-UKS"
+    location            = var.location_devtest
+    resource_group_name = data.azurerm_resource_group.rg-devtest-networking.name
+    provider            = azurerm.sub-devtest
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-DevTest-Management-UKS" {
+    network_security_group_id = azurerm_network_security_group.NSG-DevTest-Management-UKS.id
+    subnet_id                 = azurerm_subnet.Sn-DevTest-Management-UKS.id
+    provider                  = azurerm.sub-devtest
+}
+
+resource "azurerm_network_security_rule" "NSG-DevTest-Management-UKS-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+  destination_address_prefix  = "10.206.50.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-devtest-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-DevTest-Management-UKS.name
+    provider                    = azurerm.sub-devtest
+}
+
+resource "azurerm_network_security_rule" "NSG-DevTest-Management-UKS_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-devtest-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-DevTest-Management-UKS.name
+        provider                    = azurerm.sub-devtest
+  
+}
+
+# NSG for DevTest management subnet UKW Subnet
+
+resource "azurerm_network_security_group" "NSG-DevTest-Management-UKW" {
+    name                = "NSG-DevTest-Management-UKW"
+    location            = var.location_dr
+    resource_group_name = data.azurerm_resource_group.rg-devtest-networking.name
+    provider            = azurerm.sub-devtest
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-DevTest-Management-UKW" {
+    network_security_group_id = azurerm_network_security_group.NSG-DevTest-Management-UKW.id
+    subnet_id                 = azurerm_subnet.Sn-DevTest-Management-UKW.id
+    provider                  = azurerm.sub-devtest
+}
+
+resource "azurerm_network_security_rule" "NSG-DevTest-Management-UKW-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+  destination_address_prefix  = "10.207.50.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-devtest-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-DevTest-Management-UKW.name
+    provider                    = azurerm.sub-devtest
+}
+
+resource "azurerm_network_security_rule" "NSG-DevTest-Management-UKW_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-devtest-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-DevTest-Management-UKW.name
+        provider                    = azurerm.sub-devtest
+  
+}

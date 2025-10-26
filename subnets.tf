@@ -164,7 +164,121 @@ resource "azurerm_subnet" "Sn-Prod-Management-UKW" {
     provider             = azurerm.sub-production
 }
 
+resource "azurerm_subnet" "Sn-Prod-Cornwall-UKS" {
+    name                 = "Sn-Prod-Cornwall-UKS "
+    resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
+    virtual_network_name = data.azurerm_virtual_network.AZ01-prod-uks.name
+    address_prefixes     = ["10.204.100.0/23"]
+    provider             = azurerm.sub-production
+}
+
+resource "azurerm_subnet" "Sn-Prod-Cornwall-UKW" {
+    name                 = "Sn-Prod-Cornwall-UKW"
+    resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
+    virtual_network_name = data.azurerm_virtual_network.AZ01-prod-ukw.name
+    address_prefixes     = ["10.205.100.0/23"]
+    provider             = azurerm.sub-production 
+}
+
+resource "azurerm_subnet" "Sn-Prod-EpsomStHellier-UKS" {
+    name                 = "Sn-Prod-EpsomStHellier-UKS "
+    resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
+    virtual_network_name = data.azurerm_virtual_network.AZ01-prod-uks.name
+    address_prefixes     = ["10.204.104.0/23"]
+    provider             = azurerm.sub-production
+}
+
+resource "azurerm_subnet" "Sn-Prod-EpsomStHellier-UKW" {
+    name                 = "Sn-Prod-EpsomStHellier-UKW"
+    resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
+    virtual_network_name = data.azurerm_virtual_network.AZ01-prod-ukw.name
+    address_prefixes     = ["10.205.104.0/23"]
+    provider             = azurerm.sub-production
+}
+
+resource "azurerm_subnet" "Sn-Prod-Mitie-UKS" {
+    name                 = "Sn-Prod-Mitie-UKS "
+    resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
+    virtual_network_name = data.azurerm_virtual_network.AZ01-prod-uks.name
+    address_prefixes     = ["10.204.108.0/23"]
+    provider             = azurerm.sub-production
+
+}
+
+resource "azurerm_subnet" "Sn-Prod-Mitie-UKW" {
+    name                 = "Sn-Prod-Mitie-UKW"
+    resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
+    virtual_network_name = data.azurerm_virtual_network.AZ01-prod-ukw.name
+    address_prefixes     = ["10.205.108.0/23"]
+    provider             = azurerm.sub-production
+}
+
+resource "azurerm_subnet" "Sn-Prod-OCS-UKS" {
+    name                 = "Sn-Prod-OCS-UKS "
+    resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
+    virtual_network_name = data.azurerm_virtual_network.AZ01-prod-uks.name
+    address_prefixes     = ["10.204.112.0/23"]
+    provider             = azurerm.sub-production
+}
+
+resource "azurerm_subnet" "Sn-Prod-OCS-UKW" {
+    name                 = "Sn-Prod-OCS-UKW"
+    resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
+    virtual_network_name = data.azurerm_virtual_network.AZ01-prod-ukw.name
+    address_prefixes     = ["10.205.112.0/23"]
+    provider             = azurerm.sub-production
+}
+
+resource "azurerm_subnet" "Sn-Prod-Serco-UKS" {
+    name                 = "Sn-Prod-Serco-UKS "
+    resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
+    virtual_network_name = data.azurerm_virtual_network.AZ01-prod-uks.name
+    address_prefixes     = ["10.204.116.0/23"]
+    provider             = azurerm.sub-production
+}
+
+resource "azurerm_subnet" "Sn-Prod-Serco-UKW" {
+    name                 = "Sn-Prod-Serco-UKW"
+    resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
+    virtual_network_name = data.azurerm_virtual_network.AZ01-prod-ukw.name
+    address_prefixes     = ["10.205.116.0/23"]
+    provider             = azurerm.sub-production
+}
+
+resource "azurerm_subnet" "Sn-Prod-Sondexo-UKS" {
+    name                 = "Sn-Prod-Sondexo-UKS "
+    resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
+    virtual_network_name = data.azurerm_virtual_network.AZ01-prod-uks.name
+    address_prefixes     = ["10.204.120.0/23"]
+    provider             = azurerm.sub-production
+}
+
+resource "azurerm_subnet" "Sn-Prod-Sondexo-UKW" {
+    name                 = "Sn-Prod-Sondexo-UKW"
+    resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
+    virtual_network_name = data.azurerm_virtual_network.AZ01-prod-ukw.name
+    address_prefixes     = ["10.205.120.0/23"]
+    provider             = azurerm.sub-production
+}
+
+resource "azurerm_subnet" "Sn-Prod-Stanley-UKS" {
+    name                 = "Sn-Prod-Stanley-UKS "
+    resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
+    virtual_network_name = data.azurerm_virtual_network.AZ01-prod-uks.name
+    address_prefixes     = ["10.204.124.0/23"]
+    provider             = azurerm.sub-production
+}
+
+resource "azurerm_subnet" "Sn-Prod-Stanley-UKW" {
+    name                 = "Sn-Prod-Stanley-UKW"
+    resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
+    virtual_network_name = data.azurerm_virtual_network.AZ01-prod-ukw.name
+    address_prefixes     = ["10.205.124.0/23"]
+    provider             = azurerm.sub-production
+}
+
 # Subnet definitions for DevTest vNets
+
 
 resource "azurerm_subnet" "Sn-DevTest-Management-UKS" {
     name                 = "Sn-DevTest-Management-UKS "
