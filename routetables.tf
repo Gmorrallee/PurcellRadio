@@ -111,7 +111,7 @@ resource "azurerm_route_table" "RT-Conn-Management-UKS" {
     provider            = azurerm.sub-connectivity
 }
 
-resource "azurerm_subnet_route_table_association" "Assoc-RT-ConnManagement-UKS" {
+resource "azurerm_subnet_route_table_association" "Assoc-RT-Conn-Management-UKS" {
     subnet_id          = azurerm_subnet.Sn-Conn-Management-UKS.id
     route_table_id     = azurerm_route_table.RT-Conn-Management-UKS.id
     depends_on         = [azurerm_route_table.RT-Conn-Management-UKS]   
@@ -161,7 +161,7 @@ resource "azurerm_route_table" "RT-Prod-Management-UKS" {
     provider            = azurerm.sub-production
 }
 
-resource "azurerm_subnet_route_table_association" "Assoc-RT-ProdManagement-UKS" {
+resource "azurerm_subnet_route_table_association" "Assoc-RT-Prod-Management-UKS" {
     subnet_id          = azurerm_subnet.Sn-Prod-Management-UKS.id
     route_table_id     = azurerm_route_table.RT-Prod-Management-UKS.id
     depends_on         = [azurerm_route_table.RT-Prod-Management-UKS]   
@@ -201,6 +201,32 @@ resource "azurerm_route" "Internet-Prod-Management-UKW" {
     next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = var.firewall_private_ip_ukw
 }
+
+#Route Table for UKS Production Cornwall Subnet
+
+resource "azurerm_route_table" "RT-Prod-Cornwall-UKS" {
+    name = "RT-Prod-Cornwall-UKS"
+    location            = var.location_production
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_route_table_association" "Assoc-RT-Prod-Cornwall-UKS" {
+    subnet_id          = azurerm_subnet.Sn-Prod-Cornwall-UKS.id
+    route_table_id     = azurerm_route_table.RT-Prod-Cornwall-UKS.id
+    depends_on         = [azurerm_route_table.RT-Prod-Cornwall-UKS]   
+}
+
+resource "azurerm_route" "Internet-Prod-Cornwall-UKS" {
+    name                   = "Route-Internet"
+    resource_group_name    = data.azurerm_resource_group.rg-production-networking.name
+    provider               = azurerm.sub-production
+    route_table_name       = azurerm_route_table.RT-Prod-Cornwall-UKS.name
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = var.firewall_private_ip_uks
+}
+
 
 #Route table for UKS DevTest Management Subnet
 

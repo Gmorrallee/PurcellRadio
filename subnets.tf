@@ -58,7 +58,7 @@ resource "azurerm_subnet" "Sn-Idy-DirServices-UKS" {
 }
 
 resource "azurerm_subnet" "Sn-Idy-Management-UKS" {
-    name                 = "Sn-Idy-Management-UKS "
+    name                 = "Sn-Idy-Management-UKS"
     resource_group_name  = data.azurerm_resource_group.rg-identity-networking.name
     virtual_network_name = data.azurerm_virtual_network.AZ01-idy-uks.name
     address_prefixes     = ["10.200.50.0/23"]
@@ -84,7 +84,7 @@ resource "azurerm_subnet" "Sn-Idy-Management-UKW" {
 # Subnet definitions for Connectivity VNets
 
 resource "azurerm_subnet" "Sn-Conn-Management-UKS" {
-    name                 = "Sn-Conn-Management-UKS "
+    name                 = "Sn-Conn-Management-UKS"
     resource_group_name  = data.azurerm_resource_group.rg-connectivity-networking.name
     virtual_network_name = data.azurerm_virtual_network.AZ01-conn-uks.name
     address_prefixes     = ["10.202.50.0/23"]
@@ -150,7 +150,7 @@ resource "azurerm_subnet" "azurefirewallsubnet-ukw" {
 # Subnet definitions for Production vNets
 
 resource "azurerm_subnet" "Sn-Prod-Management-UKS" {
-    name                 = "Sn-Prod-Management-UKS "
+    name                 = "Sn-Prod-Management-UKS"
     resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
     virtual_network_name = data.azurerm_virtual_network.AZ01-prod-uks.name
     address_prefixes     = ["10.204.50.0/23"]
@@ -165,7 +165,7 @@ resource "azurerm_subnet" "Sn-Prod-Management-UKW" {
 }
 
 resource "azurerm_subnet" "Sn-Prod-Cornwall-UKS" {
-    name                 = "Sn-Prod-Cornwall-UKS "
+    name                 = "Sn-Prod-Cornwall-uks"
     resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
     virtual_network_name = data.azurerm_virtual_network.AZ01-prod-uks.name
     address_prefixes     = ["10.204.100.0/23"]
@@ -181,7 +181,7 @@ resource "azurerm_subnet" "Sn-Prod-Cornwall-UKW" {
 }
 
 resource "azurerm_subnet" "Sn-Prod-EpsomStHellier-UKS" {
-    name                 = "Sn-Prod-EpsomStHellier-UKS "
+    name                 = "Sn-Prod-EpsomStHellier-uks"
     resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
     virtual_network_name = data.azurerm_virtual_network.AZ01-prod-uks.name
     address_prefixes     = ["10.204.104.0/23"]
@@ -197,7 +197,7 @@ resource "azurerm_subnet" "Sn-Prod-EpsomStHellier-UKW" {
 }
 
 resource "azurerm_subnet" "Sn-Prod-Mitie-UKS" {
-    name                 = "Sn-Prod-Mitie-UKS "
+    name                 = "Sn-Prod-Mitie-uks"
     resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
     virtual_network_name = data.azurerm_virtual_network.AZ01-prod-uks.name
     address_prefixes     = ["10.204.108.0/23"]
@@ -214,7 +214,7 @@ resource "azurerm_subnet" "Sn-Prod-Mitie-UKW" {
 }
 
 resource "azurerm_subnet" "Sn-Prod-OCS-UKS" {
-    name                 = "Sn-Prod-OCS-UKS "
+    name                 = "Sn-Prod-OCS-uks"
     resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
     virtual_network_name = data.azurerm_virtual_network.AZ01-prod-uks.name
     address_prefixes     = ["10.204.112.0/23"]
@@ -230,7 +230,7 @@ resource "azurerm_subnet" "Sn-Prod-OCS-UKW" {
 }
 
 resource "azurerm_subnet" "Sn-Prod-Serco-UKS" {
-    name                 = "Sn-Prod-Serco-UKS "
+    name                 = "Sn-Prod-Serco-uks"
     resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
     virtual_network_name = data.azurerm_virtual_network.AZ01-prod-uks.name
     address_prefixes     = ["10.204.116.0/23"]
@@ -246,7 +246,7 @@ resource "azurerm_subnet" "Sn-Prod-Serco-UKW" {
 }
 
 resource "azurerm_subnet" "Sn-Prod-Sondexo-UKS" {
-    name                 = "Sn-Prod-Sondexo-UKS "
+    name                 = "Sn-Prod-Sondexo-uks"
     resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
     virtual_network_name = data.azurerm_virtual_network.AZ01-prod-uks.name
     address_prefixes     = ["10.204.120.0/23"]
@@ -262,7 +262,7 @@ resource "azurerm_subnet" "Sn-Prod-Sondexo-UKW" {
 }
 
 resource "azurerm_subnet" "Sn-Prod-Stanley-UKS" {
-    name                 = "Sn-Prod-Stanley-UKS "
+    name                 = "Sn-Prod-Stanley-uks"
     resource_group_name  = data.azurerm_resource_group.rg-production-networking.name
     virtual_network_name = data.azurerm_virtual_network.AZ01-prod-uks.name
     address_prefixes     = ["10.204.124.0/23"]
@@ -281,7 +281,7 @@ resource "azurerm_subnet" "Sn-Prod-Stanley-UKW" {
 
 
 resource "azurerm_subnet" "Sn-DevTest-Management-UKS" {
-    name                 = "Sn-DevTest-Management-UKS "
+    name                 = "Sn-DevTest-Management-uks"
     resource_group_name  = data.azurerm_resource_group.rg-devtest-networking.name
     virtual_network_name = data.azurerm_virtual_network.AZ01-devtest-uks.name
     address_prefixes     = ["10.206.50.0/23"]
@@ -297,7 +297,7 @@ resource "azurerm_subnet" "Sn-DevTest-Management-UKW" {
 }
 
 resource "azurerm_subnet" "Sn-DevTest-Cornwall-UKS" {
-    name                 = "Sn-DevTest-Cornwall-UKS "
+    name                 = "Sn-DevTest-Cornwall-uks"
     resource_group_name  = data.azurerm_resource_group.rg-devtest-networking.name
     virtual_network_name = data.azurerm_virtual_network.AZ01-devtest-uks.name
     address_prefixes     = ["10.206.100.0/23"]

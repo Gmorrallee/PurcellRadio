@@ -281,11 +281,11 @@ resource "azurerm_network_security_group" "NSG-Prod-Management-UKS" {
     provider            = azurerm.sub-production
 }
 
-resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-Management-UKS" {
-    network_security_group_id = azurerm_network_security_group.NSG-Prod-Management-UKS.id
-    subnet_id                 = azurerm_subnet.Sn-Prod-Management-UKS.id
-    provider                  = azurerm.sub-production
-}
+#resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-Management-UKS" {
+#    network_security_group_id = azurerm_network_security_group.NSG-Prod-Management-UKS.id
+#    subnet_id                 = azurerm_subnet.Sn-Prod-Management-UKS.id
+#    provider                  = azurerm.sub-production
+#}
 
 resource "azurerm_network_security_rule" "NSG-Prod-Management-UKS-Bastion-Allow" {
   name                        = "Allow-Bastion"
@@ -456,6 +456,557 @@ resource "azurerm_network_security_rule" "NSG-Prod-Cornwall-UKW_Deny-All-Any" {
   
 }
 
+#NSG for Production EpsomStHellier UKS Subnet
+
+resource "azurerm_network_security_group" "NSG-Prod-EpsomStHellier-UKS" {
+    name                = "NSG-Prod-EpsomStHellier-UKS"
+    location            = var.location_production
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-EpsomStHellier-UKS" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-EpsomStHellier-UKS.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-EpsomStHellier-UKS.id
+    provider                  = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-EpsomStHellier-UKS-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+    destination_address_prefix  = "10.204.104.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-Prod-EpsomStHellier-UKS.name
+    provider                    = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-EpsomStHellier-UKS_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-EpsomStHellier-UKS.name
+        provider                    = azurerm.sub-production
+  
+}
+
+#NSG for Production EpsomStHellier UKW Subnet
+
+resource "azurerm_network_security_group" "NSG-Prod-EpsomStHellier-UKW" {
+    name                = "NSG-Prod-EpsomStHellier-UKW"
+    location            = var.location_dr
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-EpsomStHellier-UKW" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-EpsomStHellier-UKW.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-EpsomStHellier-UKW.id
+    provider                  = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-EpsomStHellier-UKW-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+    destination_address_prefix  = "10.205.104.0/23"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-Prod-EpsomStHellier-UKW.name
+    provider                    = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-EpsomStHellier-UKW_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-EpsomStHellier-UKW.name
+        provider                    = azurerm.sub-production
+  
+}
+
+#NSG for Production Mitie UKS Subnet
+
+resource "azurerm_network_security_group" "NSG-Prod-Mitie-UKS" {
+    name                = "NSG-Prod-Mitie-UKS"
+    location            = var.location_production
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-Mitie-UKS" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-Mitie-UKS.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-Mitie-UKS.id
+    provider                  = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Mitie-UKS-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+    destination_address_prefix  = "10.204.108.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-Prod-Mitie-UKS.name
+    provider                    = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Mitie-UKS_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Mitie-UKS.name
+        provider                    = azurerm.sub-production
+  
+}
+
+#NSG for Production Mitie UKW Subnet
+
+resource "azurerm_network_security_group" "NSG-Prod-Mitie-UKW" {
+    name                = "NSG-Prod-Mitie-UKW"
+    location            = var.location_dr
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-Mitie-UKW" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-Mitie-UKW.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-Mitie-UKW.id
+    provider                  = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Mitie-UKW-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+  destination_address_prefix  = "10.205.108.0/23"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Mitie-UKW.name
+        provider                    = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Mitie-UKW_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Mitie-UKW.name
+        provider                    = azurerm.sub-production
+  
+}
+
+#NSG for Production OCS UKS Subnet
+
+resource "azurerm_network_security_group" "NSG-Prod-OCS-UKS" {
+    name                = "NSG-Prod-OCS-UKS"
+    location            = var.location_production
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-OCS-UKS" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-OCS-UKS.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-OCS-UKS.id
+    provider                  = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-OCS-UKS-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+    destination_address_prefix  = "10.204.112.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-Prod-OCS-UKS.name
+    provider                    = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-OCS-UKS_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-OCS-UKS.name
+        provider                    = azurerm.sub-production
+  
+}
+
+#NSG for Production OCS UKW Subnet
+
+resource "azurerm_network_security_group" "NSG-Prod-OCS-UKW" {
+    name                = "NSG-Prod-OCS-UKW"
+    location            = var.location_dr
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-OCS-UKW" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-OCS-UKW.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-OCS-UKW.id
+    provider                  = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-OCS-UKW-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+    destination_address_prefix  = "10.205.112.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-Prod-OCS-UKW.name
+    provider                    = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-OCS-UKW_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-OCS-UKW.name
+        provider                    = azurerm.sub-production
+  
+}
+
+#NSG for Production Serco UKS Subnet
+
+resource "azurerm_network_security_group" "NSG-Prod-Serco-UKS" {
+    name                = "NSG-Prod-Serco-UKS"
+    location            = var.location_production
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-Serco-UKS" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-Serco-UKS.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-Serco-UKS.id
+    provider                  = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Serco-UKS-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+    destination_address_prefix  = "10.204.116.0/23"
+  resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+    network_security_group_name = azurerm_network_security_group.NSG-Prod-Serco-UKS.name
+    provider                    = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Serco-UKS_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Serco-UKS.name
+        provider                    = azurerm.sub-production
+  
+}
+
+#NSG for Production Serco UKW Subnet
+
+resource "azurerm_network_security_group" "NSG-Prod-Serco-UKW" {
+    name                = "NSG-Prod-Serco-UKW"
+    location            = var.location_dr
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-Serco-UKW" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-Serco-UKW.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-Serco-UKW.id
+    provider                  = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Serco-UKW-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+    destination_address_prefix  = "10.205.116.0/23"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Serco-UKW.name
+        provider                    = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Serco-UKW_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Serco-UKW.name
+        provider                    = azurerm.sub-production
+  
+}
+
+#NSG for Production Sondexo UKS Subnet
+
+resource "azurerm_network_security_group" "NSG-Prod-Sondexo-UKS" {
+    name                = "NSG-Prod-Sondexo-UKS"
+    location            = var.location_production
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-Sondexo-UKS" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-Sondexo-UKS.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-Sondexo-UKS.id
+    provider                  = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Sondexo-UKS-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+    destination_address_prefix  = "10.204.120.0/23"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Sondexo-UKS.name
+        provider                    = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Sondexo-UKS_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Sondexo-UKS.name
+        provider                    = azurerm.sub-production
+  
+}
+
+#NSG for Production Sondexo UKW Subnet
+
+resource "azurerm_network_security_group" "NSG-Prod-Sondexo-UKW" {
+    name                = "NSG-Prod-Sondexo-UKW"
+    location            = var.location_dr
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-Sondexo-UKW" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-Sondexo-UKW.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-Sondexo-UKW.id
+    provider                  = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Sondexo-UKW-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+    destination_address_prefix  = "10.205.120.0/23"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Sondexo-UKW.name
+        provider                    = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Sondexo-UKW_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Sondexo-UKW.name
+        provider                    = azurerm.sub-production
+  
+}
+
+#NSG for Production Stanley UKS Subnet
+
+resource "azurerm_network_security_group" "NSG-Prod-Stanley-UKS" {
+    name                = "NSG-Prod-Stanley-UKS"
+    location            = var.location_production
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-Stanley-UKS" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-Stanley-UKS.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-Stanley-UKS.id
+    provider                  = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Stanley-UKS-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+    destination_address_prefix  = "10.204.124.0/23"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Stanley-UKS.name
+        provider                    = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Stanley-UKS_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Stanley-UKS.name
+        provider                    = azurerm.sub-production
+  
+}
+
+#NSG for Production Stanley UKW Subnet
+
+resource "azurerm_network_security_group" "NSG-Prod-Stanley-UKW" {
+    name                = "NSG-Prod-Stanley-UKW"
+    location            = var.location_dr
+    resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+    provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-Stanley-UKW" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-Stanley-UKW.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-Stanley-UKW.id
+    provider                  = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Stanley-UKW-Bastion-Allow" {
+  name                        = "Allow-Bastion"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = ["10.202.251.0/24", "10.203.251.0/24"]
+    destination_address_prefix  = "10.205.124.0/23"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Stanley-UKW.name
+        provider                    = azurerm.sub-production
+}
+
+resource "azurerm_network_security_rule" "NSG-Prod-Stanley-UKW_Deny-All-Any" {
+    name                        = "Deny-All-Any"
+    priority                    = 4000
+    direction                   = "Inbound"
+    access                      = "Deny"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    resource_group_name         = data.azurerm_resource_group.rg-production-networking.name
+        network_security_group_name = azurerm_network_security_group.NSG-Prod-Stanley-UKW.name
+        provider                    = azurerm.sub-production
+  
+}
 
 # NSG for DevTest management subnet UKS Subnet
 
