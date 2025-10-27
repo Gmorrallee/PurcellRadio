@@ -227,6 +227,59 @@ resource "azurerm_route" "Internet-Prod-Cornwall-UKS" {
     next_hop_in_ip_address = var.firewall_private_ip_uks
 }
 
+#Route Table for UKS Production Epsom St Hellier Subnet
+
+resource "azurerm_route_table" "RT-Prod-EpsomStHellier-UKS" {
+     name = "RT-EpsomStHellier-UKS"
+     location            = var.location_production
+     resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+     provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_route_table_association" "Assoc-RT-Prod-EpsomStHellier-UKS" {
+    subnet_id          = azurerm_subnet.Sn-Prod-EpsomStHellier-UKS.id
+    route_table_id     = azurerm_route_table.RT-Prod-EpsomStHellier-UKS.id
+    depends_on         = [azurerm_route_table.RT-Prod-EpsomStHellier-UKS]   
+}
+
+resource "azurerm_route" "Internet-Prod-EpsomStHellier-UKS" {
+    name                   = "Route-Internet"
+    resource_group_name    = data.azurerm_resource_group.rg-production-networking.name
+    provider               = azurerm.sub-production
+    route_table_name       = azurerm_route_table.RT-Prod-EpsomStHellier-UKS.name
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = var.firewall_private_ip_uks
+}
+
+#NSG for UKS Production Mitie Subnet
+
+resource "azurerm_route_table" "RT-Prod-Mitie-UKS" {
+     name = "RT-Mitie-UKS"
+     location            = var.location_production
+     resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+     provider            = azurerm.sub-production
+}
+
+resource "azurerm_subnet_route_table_association" "Assoc-RT-Prod-Mitie-UKS" {
+    subnet_id          = azurerm_subnet.Sn-Prod-Mitie-UKS.id
+    route_table_id     = azurerm_route_table.RT-Prod-Mitie-UKS.id
+    depends_on         = [azurerm_route_table.RT-Prod-Mitie-UKS]   
+}
+
+resource "azurerm_route" "Internet-Prod-Mitie-UKS" {
+    name                   = "Route-Internet"
+    resource_group_name    = data.azurerm_resource_group.rg-production-networking.name
+    provider               = azurerm.sub-production
+    route_table_name       = azurerm_route_table.RT-Prod-Mitie-UKS.name
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = var.firewall_private_ip_uks
+}
+
+#Route table for UKS Production OCS Subnet
+
+
 
 #Route table for UKS DevTest Management Subnet
 

@@ -281,11 +281,11 @@ resource "azurerm_network_security_group" "NSG-Prod-Management-UKS" {
     provider            = azurerm.sub-production
 }
 
-#resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-Management-UKS" {
-#    network_security_group_id = azurerm_network_security_group.NSG-Prod-Management-UKS.id
-#    subnet_id                 = azurerm_subnet.Sn-Prod-Management-UKS.id
-#    provider                  = azurerm.sub-production
-#}
+resource "azurerm_subnet_network_security_group_association" "NSG-Assoc-Prod-Management-UKS" {
+    network_security_group_id = azurerm_network_security_group.NSG-Prod-Management-UKS.id
+    subnet_id                 = azurerm_subnet.Sn-Prod-Management-UKS.id
+    provider                  = azurerm.sub-production
+}
 
 resource "azurerm_network_security_rule" "NSG-Prod-Management-UKS-Bastion-Allow" {
   name                        = "Allow-Bastion"
