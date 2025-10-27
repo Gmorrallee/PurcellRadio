@@ -279,7 +279,28 @@ resource "azurerm_route" "Internet-Prod-Mitie-UKS" {
 
 #Route table for UKS Production OCS Subnet
 
+resource "azurerm_route_table" "RT-Prod-OCS-UKS" {
+     name = "RT-OCS-UKS"
+     location            = var.location_production
+     resource_group_name = data.azurerm_resource_group.rg-production-networking.name
+     provider            = azurerm.sub-production
+}
 
+resource "azurerm_subnet_route_table_association" "Assoc-RT-Prod-OCS-UKS" {
+    subnet_id          = azurerm_subnet.Sn-Prod-OCS-UKS.id
+    route_table_id     = azurerm_route_table.RT-Prod-OCS-UKS.id
+    depends_on         = [azurerm_route_table.RT-Prod-OCS-UKS]   
+}
+
+resource "azurerm_route" "Internet-Prod-OCS-UKS" {
+    name                   = "Route-Internet"
+    resource_group_name    = data.azurerm_resource_group.rg-production-networking.name
+    provider               = azurerm.sub-production
+    route_table_name       = azurerm_route_table.RT-Prod-OCS-UKS.name
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = var.firewall_private_ip_uks
+}
 
 #Route table for UKS DevTest Management Subnet
 
